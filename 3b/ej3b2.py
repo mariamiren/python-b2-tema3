@@ -35,46 +35,32 @@ import logging
 from types import MethodType
 from typing import Callable, Any
 import pandas as pd
+import pytest
+from ej3b2 import LogMethodCalls
 
-logging.basicConfig(level=logging.INFO)
-PRINT_LOGS: bool = True
+def simple_function(x, y):
+    return x + y
 
+def test_LogMethodCalls_decorates_function():
+    decorador = LogMethodCalls(print_logs=True)
+    decorated_function = decorador(
+        simple_function
+    ), #Usa la función de utilidad renonmbrada
+    assert (
+        decorated_function(2, 3) == 5
+    ), "The decorated function should return the result of 2 + 3 even with print_logs=True"
 
-class LogMethodCalls(object):
-    def __init__(self, print_logs: bool = True) -> None:
-        self.print_logs: bool = 
-
-    def __call__(self, func: Callable) -> Callable:
-        def wrapped(*args: Any, **kwargs: Any) -> Any:
-            if :
-                args_repr: list[str] = [
-                    repr(a) for a in args
-                ]  # List of argument representations
-                kwargs_repr: list[str] = [
-                    f"{k}={v!r}" for k, v in kwargs.items()
-                ]  # List of key=value representations
-                signature: str = ", ".join(args_repr + kwargs_repr)
-                logging.info("Calling %s (%s)", func.__name__, signature)
-            return 
-
-        return wrapped
-
-    def __get__(self, instance: Any, cls: Any) -> Any:
-        return self if instance is None else MethodType(self, instance)
+def test_LogMethodCalls_whit_print_logs_false():
+    decorator = LogMethodCalls(print_logs=False)
+    decorated_function = decorador(
+        simple_function
+    ) #Usa la funcion de utilidad renombrada
+    assert (
+        decorated_function(2, 3) == 5
+    ), "The decorated function should return the rsult of 2 + 3 even with print_logs=False"
 
 
-@LogMethodCalls(print_logs=PRINT_LOGS)
-def load_csv(filename: str) -> pd.DataFrame:
-    return pd.read_csv()
-
-
-@LogMethodCalls(print_logs=PRINT_LOGS)
-def load_and_describe_csv(filename: str) -> pd.DataFrame:
-    dataframe: pd.DataFrame = pd.read_csv()
-    return dataframe.describe()
-
-
-# Para probar el código, descomenta las siguientes líneas
+    # Para probar el código, descomenta las siguientes líneas
 # if __name__ == "__main__":
 #     path_parent = Path(__file__).parent
 #     FILENAME_PATH = path_parent / 'data/german_credit_data.csv'
