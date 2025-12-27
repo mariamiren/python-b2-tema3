@@ -21,16 +21,30 @@ Salida Esperada:
 
 
 from functools import partial
+from ej3c4 import apply_discount
 
 
 def apply_discount(price: float, discount: float) -> float:
     """Applies a discount to the price and returns the final price."""
-    # Write here your code
-    pass 
+    return price - (price * discount / 100)
 
+#Create specilized discount functions
+vip_discount = partial(apply_discount, discount=20)
+new_customer_discount = partial(apply_discount, discount=10)
 
-vip_discount = partial(apply_discount, discount=)
-new_customer_discount = partial(apply_discount, discount=)
+def apply_discount():
+    #Test the generic discount function
+    assert apply_discount(100, 20) == 80
+    assert apply_discount(100, 10) == 90
+    
+def vip_discount():
+    #Test the VIP discount
+    assert vip_discount(100) == 80
+    
+def new_customer_discount():
+    #Test the new customer discount
+    assert new_customer_discount(100) == 90
+
 
 
 # Para probar el código, descomenta las siguientes líneas
