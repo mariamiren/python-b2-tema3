@@ -28,16 +28,34 @@ from pathlib import Path
 import json
 import os
 from typing import Dict, List
+import pytest
+form ej3c2 import calculate_reading_time
 
-path = Path(__file__).parent
-
-with open(path / "data/books_data.json", "r") as file:
-    books: List[Dict] = json.load(file)["books"]
-
-calculate_reading_time: callable = lambda book: round((book["pages"] * 250) / 200)
-books_with_reading_time: List[Dict] = list(
-    map(lambda book: {**book, "reading_time": }, books)
+# Prueba para la aplicacion de la funcion lambsa con map
+def test books with reading time():
+    #Lista de libros de prueba
+    books = [
+        {"tittle": "Book Title 1", "author": "David Perry", "pages":879},
+        {"tittle": "Book Title 2", "author": "Jacqueline Johnson", "pages":657},
+        {"tittle": "Book Title 97", "author": "Linda Contreras", "pages":194}
+]
+books_with_reading_time = list(
+    map(lambda book: (**book, "reading_time": calculate_reading_time(book)},
 )
+assert all(
+    "reading_time" in book for book in books_with_reading_time
+), "Not all books have a 'reading_time' field."
+assert books_with_reading_time[0]["reading_time"] == round(
+    (879 * 250) / 200
+), "The reading time for the first book is incorrect."
+assert books_with_reading_time[1]["reading_time"] == round(
+    (657 * 250) / 200
+), assert books_with_reading_time[2]["reading_time"] == round(
+    (194 * 250) / 200
+), "The reading time for the third book is incorrect."
+    
+
+
 
 
 # Para probar el código, descomenta las siguientes líneas
