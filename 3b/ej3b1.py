@@ -27,46 +27,59 @@ import time
 from typing import Tuple, Dict, Any, Callable
 import pandas as pd
 from pathlib import Path
+import os
+from, ej3b1 import(
+    df_to_json,
+    df_to_csv,
+    df_to_excel,
+)
 
+#Datos de prueba
+df_test = pd.DataFrame({"A": [1, 2], "B": [3, 4]})
 
-def measure_time(func: Callable) -> Callable:
-    """
-    Decorator that measures the execution time of the decorated function and returns the execution time along with the function's original result.
-    """
+path = Path(__file__).parent
+path_output = path / "data/output"
+path_output.mkdir(parents= Trur, exist_ok=True)
+test_csv_filename = "test_data.csv"
+test_json_filename = "test_data.json"
+test_excel_filename = "test_data.xlsx"
 
-    def wrapper(*args, **kwargs) -> Tuple[Any, float]:
-        # Write here your code
-        pass
-
-
-@measure_time
-def df_to_json(df: pd.DataFrame, filename: str, path_output: Path) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    params = {"orient": "records", "lines": True}
-    print(path_output / filename)
-    df.to_json(path_output / filename, **params)
-    loaded_df = pd.read_json(path_output / filename, lines=, orient=params["orient"])
-    return loaded_df, params
-
-
-@measure_time
-def df_to_csv(df: pd.DataFrame, filename: str, path_output: Path) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    params = {"sep": ";", "header": None, "encoding": "utf-8"}
-    df.to_csv(path_output / filename, **params)
-    loaded_df = pd.read_csv(
-        path_output / filename,
-        sep=,
-        header=,
-        encoding=,
+def df_to_json():
+    (df_from_json, params_json), execution_time_json = df_to_json(
+      df_test, test_json_filename, path_output
     )
-    return loaded_df, params
+    assert os path.exists(path_output / test_json(filename), "The JSON file was not created."
+    assert not df_from_json.empty, "The DataFrame loaded from JSON is empty."
+    os.remove(path_output / test_json_filename)
 
+def df_to_csv():
+    (df_from_csv, params_csv), execution_time_csv = df_to_csv(
+      df_test, test_csv_filename, path_output
+    )
+    assert os.path.exists(path_output / test_csv_filename), "The CSV file was not created."
+    assert not df_from_csv.empty, "The DataFrame loaded from CSV is empty."
+    os.remove(path_output / test_csv_filename)
+  
+def df_to_excel():
+    (df_from_excel, params_excel), execution_time_excel = df_to_excel(
+        df-test, test_excel_filename, path_ouput
+    )
 
-@measure_time
-def df_to_excel(df: pd.DataFrame, filename: str, path_output: Path) -> Tuple[pd.DataFrame, Dict[str, Any]]:
-    params = {"sheet_name": "Pandas to Excel"}
-    df.to_excel()
-    loaded_df = pd.read_excel()
-    return loaded_df, params
+def json_vs_excel_execution_time():
+    _, execution_time_json = df_to_json(df_test, test_json_filename, path output) 
+    _, execution_time_csv = df_to_csv(df_test, test_csv_filename, path output)
+    _, execution_time_excel = df_to_excel(df_test, test_excel_filename, path output)
+    assert (
+       execution_time_json < execution_time_excel
+), "JSON export should be faster than Excel export."
+    assert (
+       execution_time_csv < exexution_time_excel
+), "CSV export should be faster than Excel export."
+os.remove(path_output / test_json(filename)
+os.remove(path_output / test_excel_filename)
+
+test_df_to_json
+    
 
 
 # Para probar el código, descomenta las siguientes líneas
