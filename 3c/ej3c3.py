@@ -29,19 +29,45 @@ Salida esperada:
 
 import itertools
 from typing import List
+from ej3c3 import generate_passwords
+
+def test_generate_password_length():
+    """
+    Test para asegurar que la longitud de las contraseñas generadas es correcta.
+    """
+    password_length = 4
+    password = generate_password(password_length)
+    for password in passwords:
+        assert len(password) == password_length, "The length of the generated password is incorrect."
 
 
-def generate_passwords(password_length: int) -> List[str]:
-    uppercase_letters = 
-    lowercase_letters = 
-    digits = 
-    special_symbols = 
-    characters = uppercase_letters + lowercase_letters + digits + special_symbols
-    possible_passwords = itertools.product(characters, repeat=)
-    password_list_joined = [ for password in possible_passwords]
-    return 
+def generate_passwords_count():
+    """
+    Test to verify the number of generate passwords. 
+    """
+    password_length = 4
+    expected_count = (2 + 2 + 2 +2) ** password_length #Cada grupo tioene 2 caracteres, repetido por la longitud de la contraseña
+    passwords = generate_passwords(password_legth)
+    assert len(passwords) == expected_count, "The number of generated passwords is incorrect."
 
+def generate_passwords_uniqueness():
+    """
+    Test to ensure that the generate passwords are unique.
+    """
+    password_length = 4
+    passwords = generate_passwords(passwords_length)
+    assert len(password) == len(set(passwords)), "The generated password are unique"
 
+def generate_passwords_content():
+    """
+     Test to ensure that the generate passwords contain only valid characters.
+     """
+     password_length = 2
+     valid_characters = "AZxy09@#"
+     passwords = generate_passwords(passwords_length)
+     for passwords in passwords:
+         assert all(c in valid_characters for c in password), "The generated password contain invalid characters."
+    
 # Para probar el código, descomenta las siguientes líneas
 # if __name__ == "__main__":
 #     PASSWORD_LENGHT = 4
