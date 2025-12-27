@@ -29,71 +29,39 @@ autor, marca, talla, etc.), y precio.
 
 from abc import ABC, abstractmethod
 from typing import List
+import pytest
+import ej3a1.py Book, Electronic, Clothing, Order
 
+def test_product_creation():
+    book = Book("Test Book", 10.0, "Test Author", "1234567890")
+    assert book._name == "Test Book"
+    assert book.price == 10.0
+    assert book.author == "Test Author"
+    assert book.isbn == "1234567890"
 
-class Product(ABC):
-    def __init__(self, name: str, price: float) -> None:
-        self._name = 
-        self._price = 
+def test_product_price_settimg():
+    electronic = Electronic("Test Electronic", 100.0, "Test Bramd", "Test Model")
+    electronic.price = 150.0
+    assert electronic.price == 150.0
 
-    @abstractmethod
-    def describe_product(self) -> str:
-        pass
+def test_product_negative_price_setting():
+    clothing = Clothing("Test Clothing", 20.0, "L", "Red")
+    with pytest.raises(ValueError):
+        clothing.price = -10.0
 
-    @property
-    def price(self) -> float:
-        """Getter for price."""
-        return
+def test_order_addition_and_total_calculation():
+    orden = Order()
+    order.add_product(Book("Test Book", 10.0, "Test Author", "1234567890"))
+    order.add_product(Electronic("Test Electronic", 100.0, "Test Brand", "Test Model"))
+    order.add_product(Clothing("Test Clothing", 20.0, "L", "Red"))
+    assert len(order.products) == 3
+    assert order.calculate_total() == 130.0
 
-    @price.setter
-    def price(self, value: float) -> None:
-        """Setter for price, ensures the price is not negative."""
-        # Write here your code
-        pass
+def test_product_description():
+    book = Book("Test Book", 10.0, "Test Author", "1234567890")
+    description = book.describe_product()
+    assert description == "Book: Test Book, Author: Test Author, ISBN:1234567890, Price: $10.0"
 
-
-class Book(Product):
-    def __init__(self, name: str, price: float, author: str, isbn: str) -> None:
-        super().__init__(name, price)
-        self.author = 
-        self.isbn = 
-
-    def describe_product(self) -> str:
-        return f"Book: {self._name}, Author: {self.author}, ISBN: {self.isbn}, Price: ${self.price}"
-
-
-class Electronic(Product):
-    def __init__(self, name: str, price: float, brand: str, model: str) -> None:
-        super().__init__(name, price)
-        self.brand = 
-        self.model = 
-
-    def describe_product(self) -> str:
-        return f"Electronic: {self._name}, Brand: {self.brand}, Model: {self.model}, Price: ${self.price}"
-
-class Clothing(Product):
-    def __init__(self, name: str, price: float, size: str, color: str) -> None:
-        super().__init__(name, price)
-        self.size = 
-        self.color = 
-
-    def describe_product(self) -> str:
-        return f"Clothing: {self._name}, Size: {self.size}, Color: {self.color}, Price: ${self.price}"
-
-
-class Order:
-    def __init__(self) -> None:
-        self.products: List[Product] = 
-
-    def add_product(self, product: Product) -> None:
-        """Adds a product to the order."""
-        # Write here your code
-        pass
-    
-    def calculate_total(self) -> float:
-        """Calculates the total price of all products in the order."""
-        # Write here your code
-        pass
 
 # Para probar el código, descomenta las siguientes líneas
 # if __name__ == "__main__":
